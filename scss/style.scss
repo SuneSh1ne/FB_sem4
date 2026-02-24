@@ -1,0 +1,180 @@
+// Основные цвета (переменная 1)
+$primary-color: #ff6b6b;
+$secondary-color: #4ecdc4;
+$dark-color: #2c3e50;
+$light-color: #f9f9f9;
+
+// Размеры и отступы (переменная 2)
+$border-radius: 12px;
+$box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+$transition: all 0.3s ease;
+
+// Дополнительные переменные для демонстрации
+$font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$spacing-unit: 8px;
+
+// Миксин для создания эффекта поднятия при наведении
+@mixin hover-lift($lift-distance: -5px) {
+    transition: $transition;
+    
+    &:hover {
+        transform: translateY($lift-distance);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+}
+
+// Миксин для адаптивных изображений
+@mixin responsive-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-main;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.product-card {
+    max-width: 350px;
+    background: white;
+    border-radius: $border-radius;
+    overflow: hidden;
+    box-shadow: $box-shadow;
+    
+    &__image {
+        position: relative;
+        height: 250px;
+        overflow: hidden;
+        
+        img {
+            @include responsive-image;
+            transition: $transition;
+        }
+        
+        .product-card:hover & img {
+            transform: scale(1.1);
+        }
+    }
+    
+    &__badge {
+        position: absolute;
+        top: $spacing-unit * 2;
+        right: $spacing-unit * 2;
+        background: $primary-color;
+        color: white;
+        padding: $spacing-unit ($spacing-unit * 2);
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        
+        &::after {
+            content: '🔥';
+            margin-left: 5px;
+        }
+    }
+    
+    &__content {
+        padding: 20px;
+    }
+    
+    &__title {
+        font-size: 20px;
+        margin-bottom: $spacing-unit * 2;
+        color: $dark-color;
+        font-weight: 600;
+    }
+    
+    &__description {
+        font-size: 14px;
+        color: lighten($dark-color, 20%);
+        line-height: 1.6;
+        margin-bottom: $spacing-unit * 2;
+    }
+    
+    &__price-block {
+        display: flex;
+        align-items: center;
+        gap: $spacing-unit * 2;
+        margin-bottom: $spacing-unit * 3;
+    }
+    
+    &__price {
+        font-size: 24px;
+        font-weight: 700;
+        color: $primary-color;
+    }
+    
+    &__old-price {
+        font-size: 16px;
+        color: lighten($dark-color, 40%);
+        text-decoration: line-through;
+    }
+    
+    &__btn {
+        width: 100%;
+        padding: 12px;
+        background: $secondary-color;
+        color: white;
+        border: none;
+        border-radius: $border-radius;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        @include hover-lift(-3px);
+        
+        &:active {
+            transform: scale(0.98);
+        }
+        
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+    
+    &--featured {
+        border: 2px solid $primary-color;
+        
+        .product-card__badge {
+            background: $secondary-color;
+        }
+        
+        .product-card__price {
+            color: $secondary-color;
+        }
+        
+        .product-card__btn {
+            background: $primary-color;
+        }
+    }
+}
+
+.demo-variables {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: $border-radius;
+    color: $dark-color;
+    font-size: 14px;
+    text-align: center;
+}
